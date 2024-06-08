@@ -1,4 +1,4 @@
-const btnLike1 = document.getElementById("btnLike1")
+hiconst btnLike1 = document.getElementById("btnLike1")
 const countLike1 = document.getElementById("countLike1")
 
 function clickLike1(){
@@ -25,6 +25,6 @@ function summitComment()}
       commentbox.textContent += comment.value.toString() + "/n
       comment.value=""
 }
-submit.addEventListener
+submit.addEventListener("click",submitComment)
         
                           
