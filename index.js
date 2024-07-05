@@ -1,49 +1,39 @@
-const btnLike1 = document.getElementById("btnLike1")
-const countLike1 = document.getElementById("countLike1")
+function updateOrder() {
+    var products = [
+        { id: 1, name: 'Whopper Ala Carte', price: 300.00 },
+        { id: 2, name: 'Whopper Jr Burger', price: 200.00 },
+        { id: 3, name: 'Fish\'n Crisp Burger', price: 250.00 },
+        { id: 4, name: 'Big King Fish Burger', price: 270.00 },
+        { id: 5, name: 'Chicken Burger Monster', price: 290.00 },
+        { id: 6, name: 'Grilled Chicken Burger', price: 270.00 },
+    ];
 
-function clickLike1(){
-  let totalLikes = parseInt(countLike1.value) + 1
-  countLike1.textContent = totalLikes.toString()
-}  
-btnLike1.addEventListener("click",clickLike1)
+    var orderSummary = '';
+    var total = 0;
 
-const btnLike2 = document.getElementById("btnLike2")
-const countLike2 = document.getElementById("countLike2")
+    products.forEach(function(product) {
+        var quantity = document.getElementById('qty' + product.id).value;
+        if (quantity && quantity > 0) {
+            var productTotal = product.price * quantity;
+            orderSummary += product.name + ': ' + quantity + ' x ' + product.price + ' = ' + productTotal.toFixed(2) + '\n';
+            total += productTotal;
+        }
+    });
 
-function clickLike2(){
-  let totalLikes = parseInt(countLike2.value) + 1
-  countLike2.textContent = totalLikes.toString()
-}  
-btnLike2.addEventListener("click",clickLike2)
+    document.getElementById('carts').value = orderSummary;
+    document.getElementById('total').value = total.toFixed(2);
 
-const btnDisLike1 = document.getElementById("btnDisLike1")
-const countDisLike1 = document.getElementById("countDisLike1")
-
-function clickDisLike1(){
-  let totalDisLikes = parseInt(countDisLike1.value) + 1
-  countDisLike1.textContent = totalDisLikes.toString()
-}  
-btnDisLike1.addEventListener("click",clickDisLike1)
-
-const btnDisLike2 = document.getElementById("btnDisLike2")
-const countDisLike2 = document.getElementById("countDisLike2")
-
-function clickDisLike2(){
-  let totalDisLikes = parseInt(countDisLike2.value) + 1
-  countDisLike2.textContent = totalDisLikes.toString()
-}  
-btnDisLike2.addEventListener("click",clickDisLike2)
-
-const submit = document.getElementById("submit")
-
-const comment = document.getElementById("comment")
-
-const commentbox = document.getElementById("commentbox")
-
-function submitComment(){
-
-commentbox.textContent += comment.value.toString() + "\n"
-comment.value=""
+    calculateChange();
 }
 
-submit.addEventListener("click", submitComment)
+function calculateChange() {
+    var total = parseFloat(document.getElementById('total').value);
+    var cash = parseFloat(document.getElementById('cash').value);
+
+    if (!isNaN(total) && !isNaN(cash) && cash >= total) {
+        var change = cash - total;
+        document.getElementById('change').value = change.toFixed(2);
+    } else {
+        document.getElementById('change').value = '';
+    }
+}
